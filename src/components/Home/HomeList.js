@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { FetchPopularMovies } from 'service/FetchMovies';
+import { FetchPopularTodayMovies } from 'service/FetchMovies';
 import { constans } from 'helpers/constans';
 
-const {movies } = constans;
+const { movies, home } = constans;
+
 export default function HomeList() {
   const [post, setPost] = useState([]);
 
   useEffect(() => {
-    FetchPopularMovies()
+    FetchPopularTodayMovies()
       .then(res => setPost(res.results))
       .catch(err => console.log(err.message));
   }, []);
@@ -16,11 +17,12 @@ export default function HomeList() {
   return (
     <>
       <ul>
-        {post.map(({ title, id }) => {
-          //   console.log(id);
+        {post.map(({ original_name, title, id }) => {
           return (
             <li key={id}>
-              <Link to={`${movies}/${id}`}>{title}</Link>
+              <Link to={`${movies}/${id}`} state={{ home, from: '/' }}>
+                {original_name ?? title}
+              </Link>
             </li>
           );
         })}
