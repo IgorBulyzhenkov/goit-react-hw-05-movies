@@ -10,8 +10,7 @@ export default function Movies() {
   const [searchFilm, setSearchFilm] = useState({});
   const [err, setErr] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
-  const query = searchParams.get('query');
-
+  const backSearch = searchParams.get('query');
 
   const handleSubmit = e => {
     e.preventDefault();
@@ -20,12 +19,11 @@ export default function Movies() {
   };
 
   useEffect(() => {
-    if (query === null) return;
-    FetchSearchMovie(query)
+    if (backSearch === null) return;
+    FetchSearchMovie(backSearch)
       .then(res => setSearchFilm(res))
       .catch(error => setErr(error.message));
-  }, [query]);
-
+  }, [backSearch]);
 
   const handleChange = ({ target: { value } }) => {
     setName(value.trim());
@@ -47,7 +45,7 @@ export default function Movies() {
               <li key={id}>
                 <Link
                   to={`${movies}/${id}`}
-                  state={{ movies, from: `/movies?query=${query}` }}
+                  state={{ movies, from: `/movies?query=${backSearch}` }}
                 >
                   {original_title}
                 </Link>

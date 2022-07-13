@@ -18,7 +18,6 @@ function MoviesId() {
   const params = useParams();
   const navigate = useNavigate();
 
-  console.log(params);
 
   useEffect(() => {
     FetchInformationMovies(params.movieId)
@@ -29,7 +28,6 @@ function MoviesId() {
   const handleClick = () => {
     navigate(location.state.from, { replace: false });
   };
-
   const { genres, vote_average, title, overview, poster_path } = post;
 
   return (
