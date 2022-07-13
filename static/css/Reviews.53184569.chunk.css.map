@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/Reviews.53184569.chunk.css","mappings":"AAAA,sBACI,cAAe,CACf,eAAgB,CAEhB,QAAS,CADT,SAEJ","sources":["components/Movies/Reviews/Reviews.module.css"],"sourcesContent":[".title {\n    font-size: 40px;\n    font-weight: 800;\n    padding: 0;\n    margin: 0;\n}"],"names":[],"sourceRoot":""}
