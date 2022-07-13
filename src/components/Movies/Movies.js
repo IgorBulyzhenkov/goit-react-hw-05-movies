@@ -1,32 +1,34 @@
-import { useState } from 'react';
-import { Outlet, Link, useLocation, useSearchParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Outlet, Link, useSearchParams } from 'react-router-dom';
 import { FetchSearchMovie } from 'service/FetchMovies';
 import { constans } from 'helpers/constans';
 
 const { movies } = constans;
 
 export default function Movies() {
-  const [query, setQuery] = useState('');
-  const [searchFilm, setSearch] = useState({});
+  const [name, setName] = useState('');
+  const [searchFilm, setSearchFilm] = useState({});
   const [err, setErr] = useState('');
-  const location = useLocation();
   const [searchParams, setSearchParams] = useSearchParams();
-  // const productName = searchParams.get('name') ?? '';
-  searchParams.get('query');
-  console.log('location', location);
+  const query = searchParams.get('query');
+
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (query.trim() === '') return;
-    FetchSearchMovie(query)
-      .then(res => setSearch(res))
-      .catch(error => setErr(error.message));
-    const nextParams = query !== '' ? { query } : {};
-    setSearchParams(nextParams);
+    setSearchParams({ query: name });
+    setName('');
   };
 
+  useEffect(() => {
+    if (query === null) return;
+    FetchSearchMovie(query)
+      .then(res => setSearchFilm(res))
+      .catch(error => setErr(error.message));
+  }, [query]);
+
+
   const handleChange = ({ target: { value } }) => {
-    setQuery(value);
+    setName(value.trim());
   };
 
   const { results, total_results } = searchFilm;
@@ -34,7 +36,7 @@ export default function Movies() {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="query" value={query} onChange={handleChange} />
+        <input type="text" name="name" value={name} onChange={handleChange} />
 
         <button type="submit">Search</button>
       </form>

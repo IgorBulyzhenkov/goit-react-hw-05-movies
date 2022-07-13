@@ -7,6 +7,7 @@ export default function Cast() {
   const [post, setPost] = useState({});
   const [err, setErr] = useState('');
 
+
   useEffect(() => {
     FetchCreditsMovie(params.movieId)
       .then(res => setPost(res))

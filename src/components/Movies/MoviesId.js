@@ -1,6 +1,11 @@
-import { Outlet, useLocation, useParams, useNavigate } from 'react-router-dom';
+import {
+  Outlet,
+  useLocation,
+  useParams,
+  useNavigate,
+  Link,
+} from 'react-router-dom';
 import { useState, useEffect, memo } from 'react';
-import { Link } from 'react-router-dom';
 import { FetchInformationMovies } from 'service/FetchMovies';
 import { constans } from 'helpers/constans';
 
@@ -13,7 +18,7 @@ function MoviesId() {
   const params = useParams();
   const navigate = useNavigate();
 
-  console.log('location', location);
+  console.log(params);
 
   useEffect(() => {
     FetchInformationMovies(params.movieId)
@@ -22,7 +27,7 @@ function MoviesId() {
   }, [params.movieId]);
 
   const handleClick = () => {
-    navigate(location.state.from, { replace: true });
+    navigate(location.state.from, { replace: false });
   };
 
   const { genres, vote_average, title, overview, poster_path } = post;
@@ -39,7 +44,7 @@ function MoviesId() {
               src={
                 poster_path
                   ? `https://image.tmdb.org/t/p/w500${poster_path}`
-                  : null
+                  : 'https://upload.wikimedia.org/wikipedia/commons/b/ba/No_image_available_400_x_600.svg'
               }
               alt={`${title} !== '' ? ${title} : 'No info!'`}
               width="300"
@@ -63,10 +68,18 @@ function MoviesId() {
             <p>Additional information</p>
             <ul>
               <li>
-                <Link to={`${movies}/${params.movieId}/${cast}`}>Cast</Link>
+                <Link
+                  to={`${movies}/${params.movieId}/${cast}`}
+                  state={{ movies, from: location.state.from }}
+                >
+                  Cast
+                </Link>
               </li>
               <li>
-                <Link to={`${movies}/${params.movieId}/${reviews}`}>
+                <Link
+                  to={`${movies}/${params.movieId}/${reviews}`}
+                  state={{ movies, from: location.state.from }}
+                >
                   Reviews
                 </Link>
               </li>
