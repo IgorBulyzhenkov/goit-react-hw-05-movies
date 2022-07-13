@@ -1,3 +1,4 @@
+import s from './HomeList.module.css' 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { FetchPopularTodayMovies } from 'service/FetchMovies';
@@ -16,11 +17,15 @@ export default function HomeList() {
 
   return (
     <>
-      <ul>
+      <ul className={s.list}>
         {post.map(({ original_name, title, id }) => {
           return (
-            <li key={id}>
-              <Link to={`${movies}/${id}`} state={{ home, from: '/' }}>
+            <li key={id} className={s.item}>
+              <Link
+                to={`${movies}/${id}`}
+                state={{ home, from: '/' }}
+                className={s.link}
+              >
                 {original_name ?? title}
               </Link>
             </li>

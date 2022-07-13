@@ -1,19 +1,27 @@
 .nav {
     position: fixed;
+    z-index: 2;
     top: 0;
     left: 0;
     height: 30px;
     width: 100%;
     padding: 10px;
+    padding-top: 20px;
+    padding-left: 100px;
     border: 2px solid black;
+    background-color: rgb(44, 41, 97);
 }
 
 .home {
     margin: 10px;
     text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .movies {
     margin: 10px;
     text-decoration: none;
+    padding: 5px;
+    border-radius: 5px;
 }

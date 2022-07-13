@@ -1,3 +1,4 @@
+import s from './MoviesList.module.css';
 import { useState, useEffect } from 'react';
 import { Outlet, Link, useSearchParams } from 'react-router-dom';
 import { FetchSearchMovie } from 'service/FetchMovies';
@@ -21,7 +22,10 @@ export default function Movies() {
   useEffect(() => {
     if (backSearch === null) return;
     FetchSearchMovie(backSearch)
-      .then(res => setSearchFilm(res))
+      .then(res => {
+        setSearchFilm(res);
+        return setErr('');
+      })
       .catch(error => setErr(error.message));
   }, [backSearch]);
 
@@ -33,19 +37,28 @@ export default function Movies() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
-        <input type="text" name="name" value={name} onChange={handleChange} />
+      <form onSubmit={handleSubmit} className={s.form}>
+        <input
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleChange}
+          className={s.input}
+        />
 
-        <button type="submit">Search</button>
+        <button type="submit" className={s.btn}>
+          Search
+        </button>
       </form>
       {results ? (
         <ul>
           {results.map(({ id, original_title }) => {
             return (
-              <li key={id}>
+              <li key={id} className={s.item}>
                 <Link
                   to={`${movies}/${id}`}
                   state={{ movies, from: `/movies?query=${backSearch}` }}
+                  className={s.link}
                 >
                   {original_title}
                 </Link>
@@ -54,8 +67,10 @@ export default function Movies() {
           })}
         </ul>
       ) : null}
-      {total_results === 0 ? <p>Введіть правильну назву фільма</p> : null}
-      {err ? <p>Такий фільм не знайденно {err}</p> : null}
+      {total_results === 0 ? (
+        <p className={s.title}>Введіть правильну назву фільма</p>
+      ) : null}
+      {err ? <p className={s.title}>Такий фільм не знайденно {err}</p> : null}
       <Outlet />
     </>
   );

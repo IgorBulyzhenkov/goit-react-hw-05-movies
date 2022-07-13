@@ -1,3 +1,4 @@
+import s from './MoviesId.module.css';
 import {
   Outlet,
   useLocation,
@@ -18,7 +19,6 @@ function MoviesId() {
   const params = useParams();
   const navigate = useNavigate();
 
-
   useEffect(() => {
     FetchInformationMovies(params.movieId)
       .then(res => setPost(res))
@@ -34,10 +34,10 @@ function MoviesId() {
     <>
       {!err ? (
         <>
-          <button type="button" onClick={handleClick}>
+          <button type="button" onClick={handleClick} className={s.btn}>
             Go back
           </button>
-          <div>
+          <div className={s.card}>
             <img
               src={
                 poster_path
@@ -46,47 +46,54 @@ function MoviesId() {
               }
               alt={`${title} !== '' ? ${title} : 'No info!'`}
               width="300"
+              className={s.img}
             />
-            <h2>{title}</h2>
-            <p>User score: {vote_average * 10}%</p>
-            <ul>
+          </div>
+          <div className={s.content}>
+            <h2 className={s.name}>{title}</h2>
+            <p className={s.title}>User score: {vote_average * 10}%</p>
+            <ul className={s.list}>
               <li>
-                <h3>Overview</h3>
+                <h3 className={s.name_over}>Overview</h3>
                 <p>{overview}</p>
               </li>
-              <li>
-                Genres
-                <ul>
+              <li className={s.item}>
+                <p className={s.text}>Genres</p>
+                <ul className={s.listGenras}>
                   {genres?.map(({ name, id }) => (
                     <li key={id}>{name}</li>
                   ))}
                 </ul>
               </li>
             </ul>
-            <p>Additional information</p>
-            <ul>
-              <li>
-                <Link
-                  to={`${movies}/${params.movieId}/${cast}`}
-                  state={{ movies, from: location.state.from }}
-                >
-                  Cast
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to={`${movies}/${params.movieId}/${reviews}`}
-                  state={{ movies, from: location.state.from }}
-                >
-                  Reviews
-                </Link>
-              </li>
-            </ul>
+            <p className={s.text}>Additional information</p>
+            <div className={s.coment}>
+              <ul className={s.listGenras}>
+                <li className={s.item_link}>
+                  <Link
+                    to={`${movies}/${params.movieId}/${cast}`}
+                    state={{ movies, from: location.state.from }}
+                    className={s.link}
+                  >
+                    Cast
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to={`${movies}/${params.movieId}/${reviews}`}
+                    state={{ movies, from: location.state.from }}
+                    className={s.link}
+                  >
+                    Reviews
+                  </Link>
+                </li>
+              </ul>
+            </div>
             <Outlet />
           </div>
         </>
       ) : (
-        <p>Вибачте такий фільм не знайденно {err}</p>
+        <p className={s.title_err}>Вибачте такий фільм не знайденно {err}</p>
       )}
     </>
   );

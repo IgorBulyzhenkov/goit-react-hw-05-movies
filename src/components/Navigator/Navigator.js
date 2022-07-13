@@ -7,9 +7,10 @@ const { home, movies } = constans;
 
 const StyledLink = styled(NavLink)`
   color: black;
-
+  background-color: beige;
   &.active {
     color: orange;
+    background-color: rgb(175, 3, 147);
   }
 `;
 

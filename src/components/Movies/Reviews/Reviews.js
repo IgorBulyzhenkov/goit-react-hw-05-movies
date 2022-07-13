@@ -1,3 +1,4 @@
+import s from './Reviews.module.css';
 import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 import { FetchReviewsMovie } from 'service/FetchMovies';
@@ -29,9 +30,11 @@ export default function Reviews() {
           })}
         </ul>
       ) : (
-        <p>Вибачте таких коментарів не знайденно </p>
+        <p className={s.title}>Вибачте таких коментарів не знайденно </p>
       )}
-      {err ?? <p>Вибачте таких коментарів не знайденно {err}</p>}
+      {err ?? (
+        <p className={s.title}>Вибачте таких коментарів не знайденно {err}</p>
+      )}
     </>
   );
 }
